@@ -1,6 +1,6 @@
 ### compilers and options
 CC	= gcc
-CFLAGS	= -O2 -mcpu=pentium -Werror -DXBE $(EXTRA_CFLAGS)
+CFLAGS	= -m32 -O2 -fno-stack-protector -mcpu=pentium -DXBE $(EXTRA_CFLAGS)
 LD	= ld
 LDFLAGS	= -s -S -T ldscript.ld
 OBJCOPY	= objcopy
@@ -29,7 +29,7 @@ linux.iso: default.xbe
 	mkisofs -udf $< linuxboot.cfg vmlinuz initrd > $@
 
 image:
-	$(CC) $(EXTRA_CFLAGS) $(TOPDIR)/imagebld/imagebld.c $(TOPDIR)/imagebld/sha1.c -o $(TOPDIR)/imagebld/image
+	$(CC) -m32 $(EXTRA_CFLAGS) $(TOPDIR)/imagebld/imagebld.c $(TOPDIR)/imagebld/sha1.c -o $(TOPDIR)/imagebld/image
 	
 default.elf : ${OBJECTS} ${RESOURCES}
 	${LD} -o default.elf ${OBJECTS} ${RESOURCES} ${LDFLAGS}
